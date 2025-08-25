@@ -8,14 +8,28 @@
       "installMaven": "true",
       "installGradle": "false"
     },
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true"
+    }
   },
   "customizations": {
     "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/usr/bin/zsh"
+          }
+        }
+      },
       "extensions": [
         "GitHub.github-vscode-theme",
         "rangav.vscode-thunder-client",
-        "vmware.vscode-boot-dev-pack"
+        "vmware.vscode-boot-dev-pack",
+        "vscode.git",
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
@@ -25,7 +39,7 @@
   //    "vmware.vscode-boot-dev-pack"
   // Additional Extensions Here
   //  ],
-  "onCreateCommand": "echo PS1='\"$ \"' >> ~/.bashrc",
+  "onCreateCommand": "echo 'PROMPT=\"$ \"' >> ~/.zshrc",
   "postAttachCommand": "git pull --all"
   // Update welcome text and set terminal prompt to '$ '
 }
