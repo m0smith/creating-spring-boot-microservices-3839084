@@ -1,44 +1,52 @@
-# Creating Spring Boot Microservices
-This is the repository for the LinkedIn Learning course Creating Spring Boot Microservices. The full course is available from [LinkedIn Learning][lil-course-url].
+# Explore California JPA Service
 
-> **Note:** This branch simplifies the project to a single JPA microservice and adds a Docker Compose file with MySQL for easy local testing or deployment to AWS.
+This project is a Spring Boot microservice that stores data in MySQL. It is simplified to a single JPA service and includes Docker Compose for local testing.
 
-![lil-thumbnail-url]
+## Prerequisites
 
-<p>If you’re looking for a practical introduction on creating Spring Boot microservices, this course was designed just for you. Join instructor and software developer Mary Ellen Bowman as she provides a skills-based, intermediate-level overview on how to create microservices using the power of Spring Boot 3. Along the way, discover several other related technologies and frameworks such as Spring Data, Spring Data REST, Spring MVC, JUnit, Mockito, SpringBootTest, Docker, MongoDB, Spring Security, and Spring Cloud.</p><p>This course is integrated with GitHub Codespaces, an instant cloud developer environment that offers all the functionality of your favorite IDE without the need for any local machine setup. With GitHub Codespaces, you can get hands-on practice from any machine, at any time-all while using a tool that you'll likely encounter in the workplace. Check out the "Using GitHub Codespaces with this course" video to learn how to get started.</p>
+- Java 17+
+- Docker and Docker Compose
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+## Build and Test
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+Run the unit tests and build the Docker image using the Maven wrapper:
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+```bash
+./mvnw test
+./mvnw -DskipTests compile jib:dockerBuild
+```
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+The `jib:dockerBuild` goal creates a local image tagged `explorecali-jpa:3.0.0`.
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+## Run with Docker Compose
 
- ### Instructor
+Start the application and MySQL database:
 
-Mary Ellen Bowman
-25+ years of full life-cycle software development experience
+```bash
+docker compose up
+```
 
-                            
+Docker Compose launches a `mysql-db` service and a `jpa-app` service.
 
-Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/mary-ellen-bowman?u=104).
+## Exercise the API
 
+After both containers are up, interact with the REST endpoints:
 
+```bash
+# Create a tour package
+curl -X POST http://localhost:8080/packages \
+  -H 'Content-Type: application/json' \
+  -d '{"code":"BB","name":"Beekeepers you Betcha"}'
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+# List tour packages
+curl http://localhost:8080/packages
 
-[lil-course-url]: https://www.linkedin.com/learning/creating-spring-boot-microservices
-[lil-thumbnail-url]: https://media.licdn.com/dms/image/D560DAQGP3Ee7Z9yRyA/learning-public-crop_675_1200/0/1717532201518?e=2147483647&v=beta&t=WIL8JOcMr2LPb7eXi0pmZ3qXoxRTvso6V-sQfHIpV-I
+# Delete the tour package
+curl -X DELETE http://localhost:8080/packages/BB
+```
 
+Use `docker compose down` to stop the services when finished.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
