@@ -1,6 +1,8 @@
 # Creating Spring Boot Microservices
 This is the repository for the LinkedIn Learning course Creating Spring Boot Microservices. The full course is available from [LinkedIn Learning][lil-course-url].
 
+> **Note:** This branch simplifies the project to a single JPA microservice and adds a Docker Compose file with MySQL for easy local testing or deployment to AWS.
+
 ![lil-thumbnail-url]
 
 <p>If you’re looking for a practical introduction on creating Spring Boot microservices, this course was designed just for you. Join instructor and software developer Mary Ellen Bowman as she provides a skills-based, intermediate-level overview on how to create microservices using the power of Spring Boot 3. Along the way, discover several other related technologies and frameworks such as Spring Data, Spring Data REST, Spring MVC, JUnit, Mockito, SpringBootTest, Docker, MongoDB, Spring Security, and Spring Cloud.</p><p>This course is integrated with GitHub Codespaces, an instant cloud developer environment that offers all the functionality of your favorite IDE without the need for any local machine setup. With GitHub Codespaces, you can get hands-on practice from any machine, at any time-all while using a tool that you'll likely encounter in the workplace. Check out the "Using GitHub Codespaces with this course" video to learn how to get started.</p>
