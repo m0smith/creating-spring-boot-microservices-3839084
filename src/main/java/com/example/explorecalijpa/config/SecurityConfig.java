@@ -1,5 +1,6 @@
 package com.example.explorecalijpa.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,6 +17,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity // Optional: enables @PreAuthorize, @RolesAllowed, etc.
 public class SecurityConfig {
+
+  @Value("${app.security.admin.password}")
+  private String adminPassword;
+
+  @Value("${app.security.user.password}")
+  private String userPassword;
 
   /**
    * Defines the security filter chain for HTTP requests.
@@ -38,12 +45,12 @@ public class SecurityConfig {
   @Bean
   public UserDetailsService userDetailsService() {
     UserDetails admin = User.withUsername("admin")
-        .password("{noop}password")
+        .password("{noop}" + adminPassword)
         .roles("ADMIN")
         .build();
 
     UserDetails student = User.withUsername("student")
-        .password("{noop}password")
+        .password("{noop}" + userPassword)
         .roles("USER")
         .build();
 
