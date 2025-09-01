@@ -1,5 +1,6 @@
 package com.example.explorecalijpa.config;
 
+
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
