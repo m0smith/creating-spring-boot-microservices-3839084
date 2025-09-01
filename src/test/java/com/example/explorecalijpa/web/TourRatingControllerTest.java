@@ -12,9 +12,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -40,6 +42,9 @@ public class TourRatingControllerTest {
   @Autowired
   private TestRestTemplate restTemplate;
 
+  @Value("${app.security.admin.password}")
+  private String adminPassword;
+
   @MockBean
   private TourRatingService serviceMock;
 
@@ -50,6 +55,11 @@ public class TourRatingControllerTest {
   private Tour tourMock;
 
   private RatingDto ratingDto = new RatingDto(SCORE, COMMENT,CUSTOMER_ID);
+
+  @BeforeEach
+  void setUp() {
+    restTemplate = restTemplate.withBasicAuth("admin", adminPassword);
+  }
 
   @Test
   void testCreateTourRating() {
