@@ -63,7 +63,6 @@ public class TourRatingController {
   @Operation(summary = "Create a Tour Rating")
   public RatingDto createTourRating(@PathVariable(value = "tourId") int tourId,
       @RequestBody @Valid RatingDto ratingDto) {
-    checkRatingsEnabled();
     log.info("POST /tours/{}/ratings ", tourId);
     TourRating rating = tourRatingService.createNew(tourId, ratingDto.getCustomerId(),
         ratingDto.getScore(), ratingDto.getComment());
@@ -88,7 +87,6 @@ public class TourRatingController {
   @GetMapping("/average")
   @Operation(summary = "Get the Average Score for a Tour")
   public Map<String, Double> getAverage(@PathVariable(value = "tourId") int tourId) {
-    checkRatingsEnabled();
     log.info("GET /tours/{}/ratings/average", tourId);
     return Map.of("average", tourRatingService.getAverageScore(tourId));
   }
@@ -103,7 +101,6 @@ public class TourRatingController {
   @PutMapping
   @Operation(summary = "Modify All Tour Rating Attributes")
   public RatingDto updateWithPut(@PathVariable(value = "tourId") int tourId, @RequestBody @Valid RatingDto ratingDto) {
-    checkRatingsEnabled();
     log.info("PUT /tours/{}/ratings", tourId);
     return new RatingDto(tourRatingService.update(tourId, ratingDto.getCustomerId(),
                 ratingDto.getScore(), ratingDto.getComment()));
@@ -120,7 +117,6 @@ public class TourRatingController {
   @Operation(summary = "Modify Some Tour Rating Attributes")
   public RatingDto updateWithPatch(@PathVariable(value = "tourId") int tourId,
       @RequestBody @Valid RatingDto ratingDto) {
-    checkRatingsEnabled();
     log.info("PATCH /tours/{}/ratings", tourId);
     return new RatingDto(tourRatingService.updateSome(tourId,
         ratingDto.getCustomerId(),
@@ -137,7 +133,6 @@ public class TourRatingController {
   @DeleteMapping("/{customerId}")
   @Operation(summary = "Delete a Customer's Rating of a Tour")
   public void delete(@PathVariable(value = "tourId") int tourId, @PathVariable(value = "customerId") int customerId) {
-    checkRatingsEnabled();
     log.info("DELETE /tours/{}/ratings/{}", tourId, customerId);
     tourRatingService.delete(tourId, customerId);
   }
@@ -155,7 +150,6 @@ public class TourRatingController {
   public void createManyTourRatings(@PathVariable(value = "tourId") int tourId,
                                     @RequestParam(value = "score") int score,
                                     @RequestBody List<Integer> customers) {
-    checkRatingsEnabled();
     log.info("POST /tours/{}/ratings/batch", tourId);
     tourRatingService.rateMany(tourId, score, customers);
   }
