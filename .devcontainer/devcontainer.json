@@ -11,7 +11,8 @@
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": "true"
-    }
+    },
+    "ghcr.io/devcontainers/features/aws-cli:1": {}
   },
   "customizations": {
     "vscode": {
