@@ -33,4 +33,12 @@ public interface TourRatingRepository extends JpaRepository<TourRating, Integer>
    * @return TourRating if found, null otherwise.
    */
   Optional<TourRating> findByTourIdAndCustomerId(Integer tourId, Integer customerId);
+
+  /**
+   * Lookup all TourRatings made by a customer.
+   *
+   * @param customerId the customer identifier
+   * @return a list of TourRatings for the customer
+   */
+  List<TourRating> findByCustomerId(Integer customerId);
 }
